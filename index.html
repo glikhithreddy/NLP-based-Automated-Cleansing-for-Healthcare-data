@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoAI for Healthcare</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background: #6200ea;
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        input[type="file"] {
+            margin: 1rem 0;
+        }
+        button {
+            background-color: #6200ea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #3700b3;
+        }
+        .results {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>AutoAI for Healthcare Data</h1>
+    </header>
+    <div class="container">
+        <h2>Upload Your Dataset</h2>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".csv" required>
+            <button type="submit">Upload and Analyze</button>
+        </form>
+        <div class="results" id="results" style="display: none;">
+            <h3>Results</h3>
+            <p id="anomalies"></p>
+            <p id="accuracy"></p>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById("uploadForm");
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            
+            const response = await fetch("/upload", {
+                method: "POST",
+                body: formData
+            });
+
+            const resultsDiv = document.getElementById("results");
+            if (response.ok) {
+                const data = await response.json();
+                document.getElementById("anomalies").textContent = 
+                    `Normal: ${data.anomaly_counts[1]}, Anomalies: ${data.anomaly_counts[-1]}`;
+                document.getElementById("accuracy").textContent = 
+                    `Model Accuracy: ${(data.model_score * 100).toFixed(2)}%`;
+                resultsDiv.style.display = "block";
+            } else {
+                resultsDiv.innerHTML = "<p style='color: red;'>Error processing the file.</p>";
+                resultsDiv.style.display = "block";
+            }
+        };
+    </script>
+</body>
+</html>

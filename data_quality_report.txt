@@ -1,0 +1,7 @@
+Data Quality Assessment Report
+=================================
+Total Rows: 4
+Missing Values: {'CustomerID': 0, 'Name': 0, 'Email': 0, 'JoinDate': 0, 'AmountSpent': 0, 'Email_Valid': 0}
+Duplicate Entries: 0
+Invalid Emails: 0
+Invalid Join Dates: 0
