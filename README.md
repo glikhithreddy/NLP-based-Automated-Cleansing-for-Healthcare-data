@@ -1,0 +1,2 @@
+# NLP-based-Automated-Cleansing-for-Healthcare-data
+NLP-based Automated Cleansing for Healthcare Data leverages Natural Language Processing to enhance healthcare records by correcting typos, expanding abbreviations, filling missing data, and extracting key medical entities using Named Entity Recognition (NER). This ensures standardized, high-quality data for better clinical decisions and compliance.
